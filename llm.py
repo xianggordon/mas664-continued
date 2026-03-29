@@ -46,9 +46,9 @@ def score_input(input_text: str, dimensions: list[dict]) -> list[dict]:
                 "role": "system",
                 "content": (
                     "You are an expert evaluator. Score the given text against each rubric dimension. "
-                    "For each dimension provide an integer score (1-5) and a one-sentence rationale. "
+                    "For each dimension, use the provided scale to determine the score and provide a one-sentence rationale. "
                     "Respond with JSON in this exact shape:\n"
-                    '{"scores": [{"dimension_name": "...", "score": 3, "rationale": "..."}, ...]}'
+                    '{"scores": [{"name": "...", "score": "...", "rationale": "..."}, ...]}'
                 ),
             },
             {

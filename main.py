@@ -18,18 +18,18 @@ class DimensionIn(BaseModel):
 
 class ScoreRequest(BaseModel):
     input_text: str
-    dimensions: list[DimensionIn]
+    rubric: list[DimensionIn]
 
 
 @app.post("/api/generate-rubric")
 def api_generate_rubric(body: GenerateRubricRequest):
-    dimensions = llm.generate_rubric(body.prompt)
-    return {"rubric": dimensions}
+    rubric = llm.generate_rubric(body.prompt)
+    return {"rubric": rubric}
 
 
 @app.post("/api/score")
 def api_score(body: ScoreRequest):
-    dims = [d.model_dump() for d in body.dimensions]
+    dims = [d.model_dump() for d in body.rubric]
     scores = llm.score_input(body.input_text, dims)
-    aggregate = round(sum(s["score"] for s in scores) / len(scores), 2)
+    aggregate = round(sum(int(s["score"]) for s in scores) / len(scores), 2)
     return {"aggregate_score": aggregate, "scores": scores}

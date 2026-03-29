@@ -26,6 +26,8 @@ uvicorn main:app --reload
 
 Test API at: http://127.0.0.1:8000/docs
 
+Test script: uv run python test_service.py
+
 #### Misc Notes
 
 <!-- Quick rebuild: uv pip install -r requirements.txt -->
