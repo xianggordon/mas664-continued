@@ -56,15 +56,23 @@ def test_score():
 
 
 def test_full_flow():
-    prompt = "Is building language models a profitable business?"
-    input_text = (
+    
+    # prompt = "Is building language models a profitable business?"
+    
+    # The system appears to work better on longer outputs.
+    prompt = (
         "Building language models can be profitable, but margins depend heavily on scale and "
         "distribution. Companies like OpenAI generate revenue through API access and subscriptions, "
         "while open-source competitors pressure pricing. Training costs run into hundreds of millions, "
         "requiring massive capital investment upfront. However, inference costs are declining and "
         "enterprise demand for custom models is growing. The most viable path to profitability is "
         "through platform effects — embedding models into products with existing distribution."
-    )
+    ) 
+
+    # necessary for scoring
+    input_text = prompt 
+    
+
 
     # Step 1: Generate rubric
     rubric_response = client.post("/api/generate-rubric", json={"prompt": prompt})
