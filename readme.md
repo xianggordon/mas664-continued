@@ -1,6 +1,6 @@
 # Assignment
 
-MAS664 Homework 6
+MAS664 Homework 7
 
 ## Overview
 
@@ -27,6 +27,10 @@ uvicorn main:app --reload
 Test API at: http://127.0.0.1:8000/docs
 
 Test script: uv run python test_service.py
+
+#### Curl Commands for Testing Locally
+
+
 
 #### Misc Notes
 
