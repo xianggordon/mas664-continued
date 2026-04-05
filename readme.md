@@ -20,8 +20,7 @@ https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents
 
 Running the server:
 
-source .venv/bin/activate
-uvicorn main:app --reload
+uv run uvicorn main:app --reload
 <!-- main corresponds to main.py, app is the variable name, so it's equivalent to from main import app -->
 
 Test API at: http://127.0.0.1:8000/docs

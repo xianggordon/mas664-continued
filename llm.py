@@ -25,14 +25,14 @@ client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 MODEL = "gpt-5.4-mini"
 
 
-def generate_rubric(prompt: str) -> list[dict]:
+def generate_rubric(prompt: str, model: str = MODEL) -> list[dict]:
     """Generate exactly 5 scoring dimensions for evaluating the given prompt.
 
     Returns a list of dicts with just "name" and "description" — no scale.
     The scale is a system-level concern handled by score_input (fixed 1-5).
     """
     response = client.chat.completions.create(
-        model=MODEL,
+        model=model,
         response_format={"type": "json_object"},
         messages=[
             {
@@ -53,7 +53,7 @@ def generate_rubric(prompt: str) -> list[dict]:
     return data["rubric"]
 
 
-def score_input(input_text: str, dimensions: list[dict]) -> list[dict]:
+def score_input(input_text: str, dimensions: list[dict], model: str = MODEL) -> list[dict]:
     """Score a piece of text against each rubric dimension on a fixed 1-5 scale.
 
     Returns a list of dicts: [{"name": ..., "rationale": ..., "score": 1-5}, ...].
@@ -64,7 +64,7 @@ def score_input(input_text: str, dimensions: list[dict]) -> list[dict]:
     )
 
     response = client.chat.completions.create(
-        model=MODEL,
+        model=model,
         response_format={"type": "json_object"},
         messages=[
             {
