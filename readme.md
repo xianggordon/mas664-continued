@@ -1,6 +1,6 @@
 # Assignment
 
-MAS664 Homework 7
+MAS664 HW
 
 ## Overview
 
@@ -35,4 +35,13 @@ Test script: uv run python test_service.py
 #### Misc Notes
 
 <!-- Quick rebuild: uv pip install -r requirements.txt -->
+
 <!-- Stuck processes: lsof -ti :8000; investigate process; kill [process id] -->
+
+<!-- Running as a traditional .venv
+
+source .venv/bin/activate
+pip install -r requirements.txt
+python test_service.py
+
+ -->
