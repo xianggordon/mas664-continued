@@ -44,3 +44,39 @@ pip install -r requirements.txt
 python test_service.py
 
  -->
+
+ #### Terminal Tests
+
+<!--
+
+BASE_URL="https://mas664-continued-production.up.railway.app"
+
+echo "=== 1. Generate Rubric ==="
+GENERATED=$(curl -s -X POST "$BASE_URL/api/generate-rubric" \
+  -H "Content-Type: application/json" \
+  -d '{"prompt": "Generate a rubric to evaluate output from an improv agent that creates text for entertainment"}')
+echo "$GENERATED" | python3 -m json.tool
+
+echo ""
+echo "--- Save generated rubric ---"
+GENERATED_RUBRIC=$(echo "$GENERATED" | python3 -c "import sys,json; print(json.dumps(json.load(sys.stdin)['rubric']))")
+SAVE_RESULT=$(curl -s -X POST "$BASE_URL/api/rubrics" \
+  -H "Content-Type: application/json" \
+  -d "{\"name\": \"Generated: LLM Profitability\", \"rubric\": $GENERATED_RUBRIC}")
+echo "$SAVE_RESULT" | python3 -m json.tool
+
+echo "--- Save rubric ---"
+SAVED=$(curl -s -X POST "$BASE_URL/api/rubrics" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Generic Custom Rubric",
+    "rubric": [
+      {"name": "Custom Rubric Dimension 1", "description": "Test Description 1"},
+      {"name": "Custom Rubric Dimension 2", "description": "Test Description 2"},
+      {"name": "Custom Rubric Dimension 3", "description": "Test Description 3"}
+    ]
+  }')
+
+echo "--- List rubrics ---"
+curl -s "$BASE_URL/api/rubrics" | python3 -m json.tool
+ -->
