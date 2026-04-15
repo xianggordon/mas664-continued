@@ -14,10 +14,11 @@ BASE_URL = "https://mas664-continued-production.up.railway.app"
 
 @app.get("/", response_class=HTMLResponse)
 def landing_page(request: Request):
-    return templates.TemplateResponse("index.html", {
-        "request": request,
-        "base_url": BASE_URL,
-    })
+    return templates.TemplateResponse(
+        request=request,
+        name="index.html",
+        context={"base_url": BASE_URL},
+    )
 
 
 # ── Request / Response Models ────────────────────────────────────────────────
