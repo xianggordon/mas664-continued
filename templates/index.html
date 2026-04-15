@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rubric Builder &amp; Scorer API</title>
+<style>
+  body { font-family: system-ui, -apple-system, sans-serif; max-width: 800px; margin: 0 auto; padding: 2rem; line-height: 1.6; color: #1a1a1a; }
+  h1 { border-bottom: 2px solid #333; padding-bottom: 0.5rem; }
+  h2 { margin-top: 2rem; color: #333; }
+  code { background: #f4f4f4; padding: 0.15rem 0.4rem; border-radius: 3px; font-size: 0.9em; }
+  pre { background: #1e1e1e; color: #d4d4d4; padding: 1rem; border-radius: 6px; overflow-x: auto; font-size: 0.85em; }
+  .endpoint { background: #f8f8f8; border-left: 3px solid #333; padding: 0.75rem 1rem; margin: 1rem 0; }
+  .method { font-weight: bold; }
+  .get { color: #2e7d32; }
+  .post { color: #1565c0; }
+  .delete { color: #c62828; }
+  a { color: #1565c0; }
+</style>
+</head>
+<body>
+<h1>Rubric Builder &amp; Scorer API</h1>
+<p>An API for generating evaluation rubrics, rubric refinement, and scoring text outputs. Powered by LLMs.</p>
+<p>Interactive docs: <a href="/docs">/docs</a></p>
+
+<h2>Endpoints</h2>
+
+<div class="endpoint">
+  <span class="method post">POST</span> <code>/api/generate-rubric</code> — Generate 5 scoring dimensions from a prompt
+</div>
+<div class="endpoint">
+  <span class="method post">POST</span> <code>/api/refine-rubric</code> — Validate user-edited dimensions
+</div>
+<div class="endpoint">
+  <span class="method post">POST</span> <code>/api/score</code> — Score text against a rubric
+</div>
+<div class="endpoint">
+  <span class="method post">POST</span> <code>/api/rubrics</code> — Save a rubric
+</div>
+<div class="endpoint">
+  <span class="method get">GET</span> <code>/api/rubrics</code> — List saved rubrics
+</div>
+<div class="endpoint">
+  <span class="method get">GET</span> <code>/api/rubrics/{id}</code> — Get a rubric by ID
+</div>
+<div class="endpoint">
+  <span class="method delete">DELETE</span> <code>/api/rubrics/{id}</code> — Delete a rubric
+</div>
+
+<h2>Sample Commands</h2>
+
+<h3>1. Generate a Rubric</h3>
+<pre>curl -s -X POST {{ base_url }}/api/generate-rubric \
+  -H "Content-Type: application/json" \
+  -d '{"prompt": "Is building language models a profitable business?"}'</pre>
+
+<h3>2. Refine a Rubric</h3>
+<pre>curl -s -X POST {{ base_url }}/api/refine-rubric \
+  -H "Content-Type: application/json" \
+  -d '{
+    "rubric": [
+      {"name": "Clarity", "description": "How clearly the idea is expressed"},
+      {"name": "Depth", "description": "How thoroughly the topic is explored"},
+      {"name": "Accuracy", "description": "Factual correctness of the content"},
+      {"name": "Creativity", "description": "Originality and novelty of the argument"},
+      {"name": "Evidence", "description": "Quality and relevance of supporting evidence"}
+    ]
+  }'</pre>
+
+<h3>3. Score Text Against a Rubric</h3>
+<pre>curl -s -X POST {{ base_url }}/api/score \
+  -H "Content-Type: application/json" \
+  -d '{
+    "input_text": "Climate change is a pressing issue caused by greenhouse gas emissions.",
+    "rubric": [
+      {"name": "Clarity", "description": "How clearly the idea is expressed"},
+      {"name": "Depth", "description": "How thoroughly the topic is explored"},
+      {"name": "Accuracy", "description": "Factual correctness of the content"},
+      {"name": "Relevance", "description": "How relevant the content is to the topic"},
+      {"name": "Conciseness", "description": "How efficiently the point is made"}
+    ]
+  }'</pre>
+
+<h3>4. Save a Rubric</h3>
+<pre>curl -s -X POST {{ base_url }}/api/rubrics \
+  -H "Content-Type: application/json" \
+  -d '{
+    "name": "Writing Quality",
+    "rubric": [
+      {"name": "Clarity", "description": "How clearly the idea is expressed"},
+      {"name": "Depth", "description": "How thoroughly the topic is explored"}
+    ]
+  }'</pre>
+
+<h3>5. List Saved Rubrics</h3>
+<pre>curl -s {{ base_url }}/api/rubrics</pre>
+
+<h3>6. Get a Rubric by ID</h3>
+<pre>curl -s {{ base_url }}/api/rubrics/YOUR_RUBRIC_ID</pre>
+
+<h3>7. Delete a Rubric</h3>
+<pre>curl -s -X DELETE {{ base_url }}/api/rubrics/YOUR_RUBRIC_ID</pre>
+
+<h2>Typical Flow</h2>
+<ol>
+  <li><strong>Generate</strong> — provide a prompt, get 5 evaluation dimensions</li>
+  <li><strong>Refine</strong> — edit dimensions as needed, validate via the refine endpoint</li>
+  <li><strong>Score</strong> — submit text to be scored against the rubric</li>
+  <li><strong>Save</strong> — persist the rubric for future use</li>
+</ol>
+</body>
+</html>

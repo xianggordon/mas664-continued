@@ -1,10 +1,23 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
 
 import llm
 import storage
 
 app = FastAPI(title="Rubric Builder & Scorer")
+templates = Jinja2Templates(directory="templates")
+
+BASE_URL = "https://mas664-continued-production.up.railway.app"
+
+
+@app.get("/", response_class=HTMLResponse)
+def landing_page(request: Request):
+    return templates.TemplateResponse("index.html", {
+        "request": request,
+        "base_url": BASE_URL,
+    })
 
 
 # ── Request / Response Models ────────────────────────────────────────────────
