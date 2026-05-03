@@ -19,7 +19,7 @@ Sample workflow:
 https://mas664-continued-production.up.railway.app
 
 ## Architecture Diagram
-
+Example showing how the endpoints, represented as squares, can be instrumented together in a workflow or system
 ![Architecture Diagram](<Architecture Diagram.png>)
 
 ### Misc
